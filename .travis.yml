@@ -1,0 +1,18 @@
+sudo: required
+services:
+  - docker
+before_install:
+  -
+script:
+  -
+deploy:
+  provider: elasticbeanstalk
+  region: eu-west-1
+  app: ""
+  env: ""
+  bucket_name: ""
+  bucket_path: ""
+  on:
+    branch: master
+  access_key_id: $ACCESS_KEY_ID
+  secret_access_key: $SECRET_ACCESS_KEY
