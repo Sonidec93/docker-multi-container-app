@@ -14,7 +14,7 @@ class App extends Component {
 
   async fetchIndices() {
     try {
-      let response = await axios.get("http://localhost:5000/values/all");
+      let response = await axios.get("/api/values/all");
       console.log(`Indices fetched ${response.data}`)
       this.setState({ indices: response.data || [] })
     } catch (err) {
@@ -25,7 +25,7 @@ class App extends Component {
 
   async fetchIndicesWithValues() {
     try {
-      let response = await axios.get("http://localhost:5000/values/current")
+      let response = await axios.get("/api/values/current")
       console.log(`calculated Values ${response.data}`)
       this.setState({ calculatedValues: response.data || {} })
     } catch (err) {
@@ -40,7 +40,7 @@ class App extends Component {
   async onSubmit() {
     try {
       console.log("submitted", this.inpRef.current.value);
-      let response = await axios.post("http://localhost:5000/values", { index: +this.inpRef.current.value });
+      let response = await axios.post("/api/values", { index: +this.inpRef.current.value });
       console.log(`data sent successfully ${response.data}`);
       this.inpRef.current.value = 0;
       this.fetchIndices();
@@ -67,7 +67,7 @@ class App extends Component {
         <div className={AppCss["app-values"]}>
           <b>Indices with values </b>
           <div>{Object.entries(this.state.calculatedValues).map(([key, value]) => {
-            return (<div>{`for index ${key} the value is : ${value}`}</div>)
+            return (<div key={key}>{`for index ${key} the value is : ${value}`}</div>)
           })}</div>
         </div>
       </React.Fragment>

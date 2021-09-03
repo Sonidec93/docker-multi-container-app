@@ -9,23 +9,35 @@ services:
   worker:
     build:
       context: ./worker
+      dockerfile: Dockerfile.dev
+    container_name: "worker"
+    volumes:
+      - ./worker:/app
+      - /app/node_modules
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
   client:
     build:
       context: ./ui
+      dockerfile: Dockerfile.dev
+    container_name: "client"
+    stdin_open: true
     volumes:
       - ./ui:/app
       - /app/node_modules
     ports:
-      - "80:80"
-    depends_on: 
-      - api
-    restart: always
+      - "3000:3000"
   api:
     build:
       context: ./node-server
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./node-server:/app
+      - /app/node_modules
+    container_name: "api"
+    ports: 
+      - "5000:5000"
     environment:
       - REDIS_PORT=6379
       - REDIS_HOST=redis
