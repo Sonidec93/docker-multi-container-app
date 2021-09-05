@@ -10,7 +10,7 @@ after_success:
   - docker build -t mukulkumra/demo-react-app-ui ./ui
   - docker build -t mukulkumra/demo-react-app-server ./node-server
   - docker build -t mukulkumra/demo-react-app-worker ./worker
-  - echo $DOCKER_PWD|docker login -u $DOCKER_ID --pasword-stdin
+  - echo $DOCKER_PWD|docker login -u $DOCKER_ID --password-stdin
   - docker push mukulkumra/demo-react-app-ui
   - docker push mukulkumra/demo-react-app-worker
   - docker push mukulkumra/demo-react-app-server
