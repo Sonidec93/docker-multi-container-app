@@ -2,17 +2,26 @@ sudo: required
 services:
   - docker
 before_install:
-  -
+  - docker build -t mukulkumra/demo-react-app-test -f ./ui/Dockerfile.dev ./ui
 script:
-  -
-deploy:
-  provider: elasticbeanstalk
-  region: eu-west-1
-  app: ""
-  env: ""
-  bucket_name: ""
-  bucket_path: ""
-  on:
-    branch: master
-  access_key_id: $ACCESS_KEY_ID
-  secret_access_key: $SECRET_ACCESS_KEY
+  - docker run -e CI=true mukulkumra/demo-react-app-test npm run test -- --coverage
+
+after_success:
+  - docker build -t mukulkumra/demo-react-app-ui ./ui
+  - docker build -t mukulkumra/demo-react-app-server ./node-server
+  - docker build -t mukulkumra/demo-react-app-worker ./worker
+  - echo $DOCKER_PWD|docker login -u $DOCKER_ID --pasword-stdin
+  - docker push mukulkumra/demo-react-app-ui
+  - docker push mukulkumra/demo-react-app-worker
+  - docker push mukulkumra/demo-react-app-server
+# deploy:
+#   provider: elasticbeanstalk
+#   region: eu-west-1
+#   app: "" 
+#   env: ""
+#   bucket_name: ""
+#   bucket_path: ""
+#   on:
+#     branch: master
+#   access_key_id: $ACCESS_KEY_ID
+#   secret_access_key: $SECRET_ACCESS_KEY
