@@ -13,7 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 pgClient.on("connect", (client) => {
-    client.query("CREATE TABLE IF NOT EXISTS values(number INT)").catch(err => console.log(err));
+    client.query("CREATE TABLE IF NOT EXISTS fibvalues(number INT)").catch(err => console.log(err));
 })
 
 const redisPublisher = redisClient.duplicate();
@@ -23,7 +23,7 @@ app.get("/", (req, res) => {
 })
 //send all the indices stored in postgres
 app.get("/values/all", async (req, res) => {
-    let values = await pgClient.query("SELECT * FROM values");
+    let values = await pgClient.query("SELECT * FROM fibvalues");
     res.send(values.rows);
 })
 
@@ -40,7 +40,7 @@ app.post("/values", (req, res) => {
     }
     redisClient.hset("values", +req.body.index, "Nothing yet");
     redisPublisher.publish("insert", +req.body.index);
-    pgClient.query("INSERT INTO values(number) VALUES($1)", [+req.body.index])
+    pgClient.query("INSERT INTO fibvalues(number) VALUES($1)", [+req.body.index])
     res.status(200).send({ message: "value is being stored!" })
 })
 
