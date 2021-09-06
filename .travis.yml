@@ -14,14 +14,14 @@ after_success:
   - docker push mukulkumra/demo-react-app-ui
   - docker push mukulkumra/demo-react-app-worker
   - docker push mukulkumra/demo-react-app-server
-# deploy:
-#   provider: elasticbeanstalk
-#   region: eu-west-1
-#   app: "multi-container-ebs-app" 
-#   env: "Multicontainerebsapp-env"
-#   bucket_name: "elasticbeanstalk-eu-west-1-266349384425"
-#   bucket_path: "multi-container-ebs-app"
-#   on:
-#     branch: main
-#   access_key_id: $ACCESS_KEY_ID
-#   secret_access_key: $SECRET_ACCESS_KEY
+deploy:
+  provider: elasticbeanstalk
+  region: eu-west-1
+  app: "multi-container-ebs-app" 
+  env: "Multicontainerebsapp-env"
+  bucket_name: "elasticbeanstalk-eu-west-1-266349384425"
+  bucket_path: "multi-container-ebs-app"
+  on:
+    branch: main
+  access_key_id: $ACCESS_KEY_ID
+  secret_access_key: $SECRET_ACCESS_KEY
