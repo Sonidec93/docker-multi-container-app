@@ -17,11 +17,11 @@ after_success:
 # deploy:
 #   provider: elasticbeanstalk
 #   region: eu-west-1
-#   app: "" 
-#   env: ""
-#   bucket_name: ""
-#   bucket_path: ""
+#   app: "multi-container-ebs-app" 
+#   env: "Multicontainerebsapp-env"
+#   bucket_name: "elasticbeanstalk-eu-west-1-266349384425"
+#   bucket_path: "multi-container-ebs-app"
 #   on:
-#     branch: master
+#     branch: main
 #   access_key_id: $ACCESS_KEY_ID
 #   secret_access_key: $SECRET_ACCESS_KEY
